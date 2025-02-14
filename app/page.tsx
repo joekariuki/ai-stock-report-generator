@@ -1,18 +1,21 @@
+import { Plus } from "lucide-react";
+
 export default function Home() {
   return (
     <div>
       {" "}
-      <section className="action-panel">
+      <section className="h-[400px] container flex flex-col justify-around items-center my-4 mx-8">
         <form id="ticker-input-form">
           <label htmlFor="ticker-input">
             {" "}
-            Add up to 3 stock tickers below to get a super accurate stock
-            predictions report👇{" "}
+            Add up to 3 stock tickers below to get a stock prediction report
+            generated using AI👇{" "}
           </label>
+
           <div className="form-input-control">
             <input type="text" id="ticker-input" placeholder="MSFT" />
             <button className="add-ticker-btn">
-              <img src="images/add.svg" className="add-ticker-svg" alt="add" />
+              <Plus className="w-4 h-4" />
             </button>
           </div>
         </form>
@@ -22,7 +25,7 @@ export default function Home() {
         <button className="generate-report-btn" type="button" disabled>
           Generate Report
         </button>
-        <p className="tag-line">Always correct 15% of the time!</p>
+        <p className="text-sm text-gray-600">Always correct 15% of the time!</p>
       </section>
       <section className="loading-panel">
         <img src="images/loader.svg" alt="loading" />
