@@ -64,8 +64,8 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <section className="h-[400px] flex flex-col justify-center items-center text-center">
-        <Loader2 className="w-4 h-4 animate-spin" />
+      <section className="h-[400px] flex flex-col justify-center items-center text-center space-y-4">
+        <Loader2 className="w-16 h-16 animate-spin" />
         <div id="api-message">{apiMessage}</div>
       </section>
     );
