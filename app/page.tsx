@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { Loader2, Plus } from "lucide-react";
-import { generateReport } from "@/lib/stockService";
 
 export default function Home() {
   const [tickers, setTickers] = useState<string[]>([]);
+  const [stockData, setStockData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [apiMessage, setApiMessage] = useState<string>("");
   const [report, setReport] = useState<string>("");
@@ -45,13 +45,12 @@ export default function Home() {
     }
   };
 
-  const handleGenerateReport = async () => {
+  const fetchStockData = async (tickers: string[]) => {
     setIsLoading(true);
     setApiMessage("Querying Stocks API...");
 
     try {
-      // const stockData = await fetchStockData(tickers);
-      const stockData = await fetch("/api/stock-data", {
+      const response = await fetch("/api/stock-data", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,20 +58,49 @@ export default function Home() {
         body: JSON.stringify({ tickers }),
       });
 
-      if (stockData.status !== 200) {
+      if (response.status !== 200) {
         throw new Error("Failed to fetch stock data");
       }
 
-      const stockDataJson = await stockData.json();
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching stock data:", error);
+      setApiMessage("Failed to fetch stock data");
+      throw error;
+    }
+  };
+
+  const handleGenerateReport = async () => {
+    setIsLoading(true);
+    setApiMessage("Querying Stocks API...");
+
+    try {
+      const stockData = await fetchStockData(tickers);
+      setStockData(stockData);
 
       setApiMessage("Creating report...");
-      const reportText = await generateReport(stockDataJson);
-      setReport(reportText);
+
+      const response = await fetch("/api/generate-report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ stockData }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate report");
+      }
+
+      const { report } = await response.json();
+      setReport(report);
     } catch (error) {
       setApiMessage("Error generating report. Please try again.");
       console.error(error);
     } finally {
       setIsLoading(false);
+      setTickers([]);
     }
   };
 
@@ -161,11 +189,13 @@ export default function Home() {
       </section>
 
       {report && !isLoading && (
-        <section className="hidden flex-col justify-start items-center border-2 border-solid p-4 px-8 h-[350px] my-6 mx-8 [&:not(.hidden)]:flex">
-          <h2 className="text-center font-normal -mt-[26px] bg-[#f6f6f6] px-[10px] text-[18px] mb-0">
-            Your Report 😜
-          </h2>
-          <p className="overflow-y-scroll scrollbar-hide">{report}</p>
+        <section className="flex-col container mx-auto max-w-7xl justify-start items-center border-2 border-solid p-4 px-8 h-auto">
+          <div className="space-y-4">
+            <h2 className="text-center font-normal bg-gray-200 p-2 text-lg">
+              Your Report 😜
+            </h2>
+            <p>{report}</p>
+          </div>
         </section>
       )}
     </div>
