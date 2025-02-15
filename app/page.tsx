@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Loader2, Plus } from "lucide-react";
-import { fetchStockData, generateReport } from "@/lib/stockService";
+import { generateReport } from "@/lib/stockService";
 
 export default function Home() {
   const [tickers, setTickers] = useState<string[]>([]);
@@ -50,9 +50,23 @@ export default function Home() {
     setApiMessage("Querying Stocks API...");
 
     try {
-      const stockData = await fetchStockData(tickers);
+      // const stockData = await fetchStockData(tickers);
+      const stockData = await fetch("/api/stock-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tickers }),
+      });
+
+      if (stockData.status !== 200) {
+        throw new Error("Failed to fetch stock data");
+      }
+
+      const stockDataJson = await stockData.json();
+
       setApiMessage("Creating report...");
-      const reportText = await generateReport(stockData);
+      const reportText = await generateReport(stockDataJson);
       setReport(reportText);
     } catch (error) {
       setApiMessage("Error generating report. Please try again.");
