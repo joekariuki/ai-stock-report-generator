@@ -46,8 +46,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("Fetching stock data for tickers:", tickers);
-
     const stockData = await Promise.all(
       tickers.map(async (ticker: string) => {
         const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${process.env.POLYGON_API_KEY}`;
@@ -69,7 +67,6 @@ export async function POST(request: NextRequest) {
 
         const data = (await response.json()) as PolygonResponse;
 
-        console.log(`Fetched data for ${ticker}:`, data);
         return { ticker, data };
       })
     );
