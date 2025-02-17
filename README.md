@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Stock Report Generator
 
-## Getting Started
+An intelligent stock analysis tool that generates comprehensive reports on stock performance using real-time market data and AI insights.
 
-First, run the development server:
+## Features
+
+- **Real-Time Stock Data**: Fetch current and historical stock data using the Polygon.io API
+- **Multiple Stock Analysis**: Analyze up to 3 different stocks simultaneously
+- **AI-Powered Reports**: Generate detailed stock performance reports using OpenAI's GPT-4
+- **30-Day Analysis**: Track stock performance over the last 30 days
+- **Modern UI**: Built with Next.js 14 and styled with Tailwind CSS
+- **Responsive Design**: Works seamlessly on both desktop and mobile devices
+
+## Prerequisites
+
+Before running this application, make sure you have:
+- Node.js 18.0 or later
+- npm or yarn package manager
+- API keys for:
+  - [OpenAI](https://platform.openai.com) - For AI-powered report generation
+  - [Polygon.io](https://polygon.io) - For stock market data
+
+## Environment Setup
+
+1. Clone the repository
+2. Create a `.env` file in the root directory with the following variables:
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+POLYGON_API_KEY=your_polygon_api_key_here
+```
+
+## Installation
 
 ```bash
+# Install dependencies
+npm install
+# or
+yarn install
+
+# Run the development server
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Enter a stock ticker symbol (e.g., AAPL, GOOGL) in the input field
+2. Add up to 3 different stocks for analysis
+3. Click "Generate Report" to get an AI-powered analysis of the selected stocks
+4. View the comprehensive report including price changes and recommendations
 
-## Learn More
+## Security Notes
 
-To learn more about Next.js, take a look at the following resources:
+- Never commit your `.env` file to version control
+- Keep your API keys secure and rotate them regularly
+- Use environment variables for all sensitive information
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js 14](https://nextjs.org/) - React Framework
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [OpenAI API](https://openai.com/) - AI Report Generation
+- [Polygon.io](https://polygon.io/) - Stock Market Data
+- TypeScript - Type Safety
+- React - UI Components
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
