@@ -2,6 +2,17 @@
 
 An intelligent stock analysis tool that generates comprehensive reports on stock performance using real-time market data and AI insights.
 
+## Demo
+
+https://raw.githubusercontent.com/joekariuki/ai-stock-report-generator/main/public/assets/demo.mp4
+
+Watch the demo video above to see the application in action:
+
+- Adding multiple stock tickers
+- Fetching real-time market data
+- Generating AI-powered analysis reports
+- Responsive UI interactions
+
 ## Features
 
 - **Real-Time Stock Data**: Fetch current and historical stock data using the Polygon.io API
@@ -14,6 +25,7 @@ An intelligent stock analysis tool that generates comprehensive reports on stock
 ## Prerequisites
 
 Before running this application, make sure you have:
+
 - Node.js 18.0 or later
 - npm or yarn package manager
 - API keys for:
@@ -24,6 +36,7 @@ Before running this application, make sure you have:
 
 1. Clone the repository
 2. Create a `.env` file in the root directory with the following variables:
+
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
 POLYGON_API_KEY=your_polygon_api_key_here
