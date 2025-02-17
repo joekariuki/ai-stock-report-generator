@@ -4,7 +4,9 @@ An intelligent stock analysis tool that generates comprehensive reports on stock
 
 ## Demo
 
-https://raw.githubusercontent.com/joekariuki/ai-stock-report-generator/main/public/assets/demo.mp4
+https://github.com/joekariuki/ai-stock-report-generator/assets/demo.mp4
+
+<video src="public/assets/demo.mp4" controls title="AI Stock Report Generator Demo"></video>
 
 Watch the demo video above to see the application in action:
 
