@@ -1,5 +1,14 @@
 import OpenAI from "openai";
 
+interface StockResult {
+  t: string; // timestamp
+  c: number; // closing price
+  o: number; // opening price
+  h: number; // high price
+  l: number; // low price
+  n: number; // number of transactions
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -11,7 +20,20 @@ export async function POST(request: Request) {
     return new Response("Invalid stock data format", { status: 400 });
   }
 
-  console.log("Received stock data:", JSON.stringify(stockData, null, 2));
+  // Format stock data into a readable format
+  const formattedData = stockData
+    .map((item) => {
+      const { ticker, data } = item;
+      const results = data?.results || [];
+      const formattedResults = results
+        .map(
+          (result: StockResult) =>
+            `${result.t} ${result.c} ${result.o} ${result.h} ${result.l} ${result.n}`
+        )
+        .join("\n");
+      return `${ticker}\n${formattedResults}`;
+    })
+    .join("\n\n");
 
   try {
     const response = await openai.chat.completions.create({
@@ -24,13 +46,12 @@ export async function POST(request: Request) {
         },
         {
           role: "user",
-          content: `Here is the stock performance data:\n${stockData}`,
+          content: `Here is the stock performance data:\n${formattedData}`,
         },
       ],
     });
 
     const report = response.choices[0].message.content;
-    console.log("Generated report:", report);
 
     return new Response(JSON.stringify({ report }), {
       status: 200,
